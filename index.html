@@ -1,173 +1,156 @@
-
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>wisingsite</title>
   <style>
-    body {
-      font-family: sans-serif;
+    * {
       margin: 0;
-      padding: 2rem;
-      background: #f0f0f0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: url('21604.jpg') no-repeat center center fixed;
+      background-size: cover;
+      position: relative;
+      min-height: 100vh;
+    }
+
+    body::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.6); /* escurece para leitura */
+      z-index: 0;
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      max-width: 500px;
+      margin: 0 auto;
+      padding: 40px 20px;
       text-align: center;
+      color: white;
     }
-    h1 {
-      margin-bottom: 0.3rem;
-    }
-    #username {
-      color: #555;
-      margin-top: 0;
-    }
+
     .profile-pic {
-      width: 100px;
-      height: 100px;
-      object-fit: cover;
+      width: 120px;
+      height: 120px;
       border-radius: 50%;
-      border: 3px solid #333;
-      margin-bottom: 1rem;
-    }
-    .admin-panel {
-      margin: 2rem 0;
-    }
-    .admin-panel input,
-    .admin-panel button {
-      display: block;
-      margin: 0.5rem auto;
-      padding: 0.5rem;
-      font-size: 1rem;
-    }
-    .link-container {
-      margin-top: 2rem;
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-      align-items: center;
-    }
-    .link-item {
-      display: flex;
-      align-items: center;
-      background: #fff;
-      padding: 0.75rem 1rem;
-      border-radius: 8px;
-      width: 90%;
-      max-width: 400px;
-      box-shadow: 0 0 5px rgba(0,0,0,0.1);
-      text-decoration: none;
-      color: #000;
-      transition: transform 0.2s;
-    }
-    .link-item:hover {
-      transform: scale(1.02);
-    }
-    .link-icon {
-      width: 32px;
-      height: 32px;
-      margin-right: 12px;
-      border-radius: 4px;
       object-fit: cover;
+      border: 3px solid white;
+    }
+
+    .username {
+      margin: 10px 0 5px;
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .handle {
+      font-size: 16px;
+      color: #ccc;
+      margin-bottom: 20px;
+    }
+
+    .link {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background-color: rgba(255, 255, 255, 0.1);
+      padding: 12px 20px;
+      margin: 10px 0;
+      border-radius: 8px;
+      text-decoration: none;
+      color: white;
+      transition: background 0.3s;
+    }
+
+    .link:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .link img {
+      width: 24px;
+      height: 24px;
+      object-fit: cover;
+      border-radius: 4px;
+    }
+
+    input[type="file"],
+    input[type="text"] {
+      margin-top: 10px;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .admin-controls {
+      margin-top: 30px;
+    }
+
+    button {
+      background: #ffffff22;
+      border: 1px solid #ffffff44;
+      color: white;
+      padding: 8px 14px;
+      border-radius: 6px;
+      margin-top: 10px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #ffffff33;
     }
   </style>
 </head>
 <body>
-  <h1 id="displayName">Wisingsite</h1>
-  <p id="username">@usuario</p>
-  <img src="" alt="Foto de perfil" class="profile-pic" id="profileImage"/>
+  <div class="container">
+    <img src="profile.jpg" alt="Foto de perfil" class="profile-pic" id="profileImage"/>
+    <div class="username" id="displayName">Seu Nome</div>
+    <div class="handle" id="displayHandle">@seunome</div>
 
-  <div class="admin-panel">
-    <h3>Área do administrador</h3>
+    <div id="linksContainer">
+      <!-- Links com imagem ao lado -->
+      <a href="https://exemplo.com" class="link" target="_blank">
+        <img src="icon.png" alt="icon" />
+        Exemplo de Link
+      </a>
+    </div>
 
-    <input type="file" id="profileInput" accept="image/*" />
-    <button onclick="updateProfileImage()">Alterar foto de perfil</button>
-
-    <input type="text" id="nameInput" placeholder="Novo nome" />
-    <input type="text" id="atInput" placeholder="Novo @username" />
-    <button onclick="updateName()">Alterar nome e @</button>
-
-    <hr>
-
-    <h4>Adicionar novo link:</h4>
-    <input type="text" id="linkText" placeholder="Título do link" />
-    <input type="text" id="linkURL" placeholder="URL do link" />
-    <input type="text" id="linkIcon" placeholder="URL da imagem (ícone)" />
-    <button onclick="addLink()">Adicionar link</button>
+    <div class="admin-controls">
+      <h3>🔒 Área Pessoal (somente você vê)</h3>
+      <input type="file" id="uploadProfilePic" />
+      <input type="text" placeholder="Seu nome" id="nameInput" />
+      <input type="text" placeholder="@seuuser" id="handleInput" />
+      <button onclick="updateProfile()">Atualizar Perfil</button>
+    </div>
   </div>
 
-  <div class="link-container" id="links"></div>
-
   <script>
-    function updateProfileImage() {
-      const input = document.getElementById('profileInput');
-      const file = input.files[0];
+    function updateProfile() {
+      const name = document.getElementById('nameInput').value;
+      const handle = document.getElementById('handleInput').value;
+
+      if (name) document.getElementById('displayName').textContent = name;
+      if (handle) document.getElementById('displayHandle').textContent = handle;
+    }
+
+    document.getElementById('uploadProfilePic').addEventListener('change', function(e) {
+      const file = e.target.files[0];
       if (file) {
         const reader = new FileReader();
-        reader.onloadend = function () {
-          const img = document.getElementById('profileImage');
-          img.src = reader.result;
-          localStorage.setItem('profileImage', reader.result);
+        reader.onload = function(evt) {
+          document.getElementById('profileImage').src = evt.target.result;
         };
         reader.readAsDataURL(file);
       }
-    }
-
-    function updateName() {
-      const name = document.getElementById('nameInput').value;
-      const at = document.getElementById('atInput').value;
-      if (name) {
-        document.getElementById('displayName').textContent = name;
-        localStorage.setItem('displayName', name);
-      }
-      if (at) {
-        document.getElementById('username').textContent = '@' + at;
-        localStorage.setItem('username', '@' + at);
-      }
-    }
-
-    function addLink() {
-      const text = document.getElementById('linkText').value;
-      const url = document.getElementById('linkURL').value;
-      const icon = document.getElementById('linkIcon').value;
-
-      if (text && url && icon) {
-        const linkData = { text, url, icon };
-        const links = JSON.parse(localStorage.getItem('customLinks') || '[]');
-        links.push(linkData);
-        localStorage.setItem('customLinks', JSON.stringify(links));
-        renderLinks();
-        document.getElementById('linkText').value = '';
-        document.getElementById('linkURL').value = '';
-        document.getElementById('linkIcon').value = '';
-      }
-    }
-
-    function renderLinks() {
-      const linksDiv = document.getElementById('links');
-      linksDiv.innerHTML = '';
-      const links = JSON.parse(localStorage.getItem('customLinks') || '[]');
-      links.forEach(link => {
-        const a = document.createElement('a');
-        a.href = link.url;
-        a.className = 'link-item';
-        a.target = '_blank';
-        a.innerHTML = `
-          <img src="${link.icon}" class="link-icon" alt="Icon">
-          ${link.text}
-        `;
-        linksDiv.appendChild(a);
-      });
-    }
-
-    window.onload = function () {
-      const savedImage = localStorage.getItem('profileImage');
-      const savedName = localStorage.getItem('displayName');
-      const savedUsername = localStorage.getItem('username');
-      if (savedImage) document.getElementById('profileImage').src = savedImage;
-      if (savedName) document.getElementById('displayName').textContent = savedName;
-      if (savedUsername) document.getElementById('username').textContent = savedUsername;
-
-      renderLinks();
-    }
+    });
   </script>
 </body>
 </html>
